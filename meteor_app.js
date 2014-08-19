@@ -12,15 +12,13 @@ if (Meteor.isClient) {
   };
 
   Template.leaderboard.events({
-    'click input.in': function(e, tmpl) {
-      Players.update({_id: Session.get('selected_player')}, {
-        $inc: {score: 5}
-    });
+    'click input': function () {
+      Players.update(Session.get("selected_player"), {$inc: {score: 5}});
     }
   });
 
   Template.player.selected = function() {
-    return Session.equals("selected_player", this._id) ? "selected" : "";
+    return Session.equals("selected_player", this._id) ? "selected" : '';
   };
 
   Template.player.events({
@@ -29,7 +27,6 @@ if (Meteor.isClient) {
     }
   });
 
-
 }
 
 if (Meteor.isServer) {
@@ -37,8 +34,7 @@ if (Meteor.isServer) {
     if (Players.find().count() === 0) {
       var names = [ "Ada Lovelace", "Grace Hopper", "Marie Curie"];
       for (var i = 0; i < names.length; i++)
-        Players.insert({name: names[i],
-                        score: Math.floor(Random.fraction()*10)*5});
+        Players.insert({name: names[i], score: Math.floor(Random.fraction()*10)*5});
     }
   });
 }
