@@ -1,19 +1,20 @@
+Players = new Meteor.Collection('players')
+
+
 if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to meteor_app.";
+  Template.leaderboard.players = function() {
+    return Players.find({}, {sort: {score: -1, name: 1 }});
   };
 
-  Template.hello.events({
-    'click input': function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
-    }
-  });
 }
 
 if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
+  Meteor.startup(function() {
+    if (Players.find().count() === 0) {
+      var names = [ "Ada Lovelace", "Grace Hopper", "Marie Curie"];
+      for (var i = 0; i < names.length; i++)
+        Players.insert({name: names[i],
+                        score: Math.floor(Random.fraction()*10)*5});
+    }
   });
 }
