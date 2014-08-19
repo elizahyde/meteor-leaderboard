@@ -15,6 +15,18 @@
 			{{> player}}
 		{{/each}}
 	</div>
+
+	{{#if selected_name}}
+	<div class="details">
+		<div class="name">
+			{{selected_name}}
+		</div>
+		<input type="button" value="Give 5 points " />
+	</div>
+	{{else}}
+	<div class="none">
+	</div>
+	{{/if}}
 </template>
 
 <template name="player">
